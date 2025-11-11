@@ -1,0 +1,9 @@
+import { DataTypes } from "sequelize";
+import sequelize from "../../config";
+
+const Media = sequelize.define("media", {
+  type: { type: DataTypes.ENUM("image", "video"), allowNull: false },
+  url: { type: DataTypes.STRING, allowNull: false },
+});
+
+export default Media;
