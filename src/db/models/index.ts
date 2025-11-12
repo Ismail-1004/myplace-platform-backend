@@ -1,4 +1,5 @@
-import User from "./User";
+import User from "./user/User";
+import Token from './user/Token'
 import Listing from "./real-estate/Listing";
 import Apartment from "./real-estate/Apartment";
 import Features from "./real-estate/Features";
@@ -6,6 +7,9 @@ import Rules from "./real-estate/Rules";
 import Amenities from "./real-estate/Amenities";
 import Media from "./real-estate/Media";
 import Contact from "./real-estate/Contact";
+
+User.hasOne(Token, { foreignKey: "userId" });
+Token.belongsTo(User, { foreignKey: "userId" });
 
 User.hasMany(Listing, { foreignKey: "userId", onDelete: "CASCADE" });
 Listing.belongsTo(User, { foreignKey: "userId" });
@@ -28,4 +32,4 @@ Contact.belongsTo(Listing, { foreignKey: "listingId" });
 Listing.hasMany(Media, { foreignKey: "listingId", onDelete: "CASCADE" });
 Media.belongsTo(Listing, { foreignKey: "listingId" });
 
-export { User, Listing, Apartment, Features, Rules, Amenities, Media, Contact }
+export { User, Token, Listing, Apartment, Features, Rules, Amenities, Media, Contact }
