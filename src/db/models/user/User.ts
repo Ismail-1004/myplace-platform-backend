@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize";
 import sequelize from '../../config';
+import { UserModel } from "../../../types/models";
 
-const User = sequelize.define('user', {
+const User = sequelize.define<UserModel>('user', {
     id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
     phone: { type: DataTypes.STRING, allowNull: false },
