@@ -1,44 +1,18 @@
 import { Request, Response } from "express";
-import bcrypt from 'bcrypt'
-import { User } from "../db/models";
-import UserDto from "../dtos/user-dto";
-import tokenService from "../services/tokenService";
+import userService from "../services/userService";
 
 class UserController {
     async register(req: Request, res: Response) {
         try {
             const { name, phone, password } = req.body;
+            const userData = await userService.register(name, phone, password, req.file)
 
-            if (!name || !phone || !password) {
-                return res.status(400).json({ message: 'Все поля обязательны!' })
-            }
+            res.cookie("refreshToken", userData.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+                httpOnly: true,
+            });
 
-            const candidate = await User.findOne({ where: { phone } })
-
-            if (candidate) {
-                return res.status(400).json({ message: "Пользователь уже существует" });
-            }
-
-            const hashPassword = await bcrypt.hash(password, 10)
-
-            const avatar = req.file ? `/uploads/avatars/${req.file.filename}` : null;
-
-            const user = await User.create({
-                name,
-                phone,
-                password: hashPassword,
-                avatar
-            })
-
-            const userDto = new UserDto(user)
-            const tokens = tokenService.generateTokens({ ...userDto })
-
-            await tokenService.saveToken(userDto.id, tokens.refreshToken)
-
-            return res.json({
-                user: userDto,
-                ...tokens
-            })
+            res.json(userData)
         } catch (e) {
             throw e
         }
@@ -46,15 +20,24 @@ class UserController {
 
     async login(req: Request, res: Response) {
         try {
-            res.json({ message: 'Hello World!' })
+            const { phone, password } = req.body
+            const userData = await userService.login(phone, password)
+
+            res.cookie("refreshToken", userData.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000,
+                httpOnly: true,
+            });
+
+            res.json(userData)
         } catch (e) {
             throw e
         }
     }
 
-    async getUser(req: Request, res: Response) {
+    async getAllUsers(req: Request, res: Response) {
         try {
-
+            const users = await userService.getAllUsers()
+            res.json(users)
         } catch (e) {
             throw e
         }
