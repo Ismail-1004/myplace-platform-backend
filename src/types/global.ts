@@ -12,5 +12,5 @@ export interface IUser {
   phone: string,
   password: string,
   role?: 'user' | 'agent' | 'admin',
-  avatar: string
+  avatar?: string | null
 }

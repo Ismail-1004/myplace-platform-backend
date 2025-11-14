@@ -4,9 +4,7 @@ export default class UserDto {
   id;
   name;
   phone;
-  password;
   role;
-  avatar;
 
   constructor(model: IUser) {
     if (model.id === undefined) {
@@ -16,8 +14,6 @@ export default class UserDto {
     this.name = model.name;
     this.id = model.id;
     this.phone = model.phone;
-    this.password = model.password
     this.role = model.role
-    this.avatar = model.avatar
   }
 }
