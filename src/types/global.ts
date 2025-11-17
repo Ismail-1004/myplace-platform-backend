@@ -4,7 +4,7 @@ declare global {
   namespace Express {
     export interface Request {
       user?: any;
-      file?: Express.Multer.File
+      file?: Express.Multer.File,
     }
   }
 }
