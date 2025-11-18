@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import sequelize from '../../config'
 
 const Features = sequelize.define("features", {
-    balcony: { type: DataTypes.BOOLEAN },
+    balcony: { type: DataTypes.INTEGER },
     windowView: { type: DataTypes.ENUM("street", "yard") },
     bathroomType: { type: DataTypes.ENUM("separate", "combined") },
     renovation: { type: DataTypes.ENUM("none", "cosmetic", "euro", "designer") },

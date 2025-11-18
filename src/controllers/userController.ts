@@ -29,7 +29,7 @@ class UserController {
             });
 
             res.json(userData)
-        } catch (e) {
+        } catch (e) {            
             throw e
         }
     }

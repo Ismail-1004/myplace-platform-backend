@@ -5,7 +5,7 @@ import authMiddleware from "../middlewares/auth-middleware";
 
 const router = Router()
 
-const uploadAvatar = createUploadMiddleware("avatars");
+const uploadAvatar = createUploadMiddleware({ folder: 'avatars' });
 
 router.post('/register', uploadAvatar.single('avatar'), userController.register)
 router.post('/login', userController.login)

@@ -10,6 +10,9 @@ const Rules = sequelize.define("rules", {
     deposit: { type: DataTypes.INTEGER },
     rentalTerm: { type: DataTypes.STRING },
     livingRules: { type: DataTypes.TEXT },
+    name: { type: DataTypes.STRING, allowNull: false },
+    phone: { type: DataTypes.STRING, allowNull: false },
+    additionalPhone: { type: DataTypes.STRING, allowNull: true },
 });
 
 export default Rules;
